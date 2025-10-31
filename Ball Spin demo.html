@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #998b74}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #f6f1ef}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #16a84e}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #f6f1ef; min-height: 17.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #f55507}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #5699ed}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica; color: #dba1f9}
+    span.s1 {color: #5699ed}
+    span.s2 {color: #f55507}
+    span.s3 {color: #16a84e}
+    span.s4 {color: #f6f1ef}
+    span.s5 {color: #dba1f9}
+    span.s6 {color: #feb925}
+    span.s7 {color: #998b74}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!doctype <span class="s1">html</span>&gt;</p>
+<p class="p2">&lt;html&gt;</p>
+<p class="p2">&lt;head&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;meta <span class="s2">charset</span>=<span class="s3">"utf-8"</span> /&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;title&gt;Backspin Magnus Effect — p5.js Demo&lt;/title&gt;</p>
+<p class="p3"><span class="s4"><span class="Apple-converted-space">  </span>&lt;script </span><span class="s2">src</span><span class="s4">=</span>"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"<span class="s4">&gt;&lt;/script&gt;</span></p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span>body { <span class="s3">margin</span>: <span class="s2">0</span>; <span class="s3">background</span>: <span class="s2">#efefef</span>; <span class="s3">font-family</span>: Arial, Helvetica, sans-serif; }</p>
+<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s5">#ui</span><span class="s4"> { </span>position<span class="s4">: absolute; </span>left<span class="s4">: </span><span class="s2">12px</span><span class="s4">; </span>top<span class="s4">: </span><span class="s2">12px</span><span class="s4">; </span>background<span class="s4">: </span><span class="s6">rgba</span><span class="s4">(</span><span class="s2">255</span><span class="s4">,</span><span class="s2">255</span><span class="s4">,</span><span class="s2">255</span><span class="s4">,</span><span class="s2">0.92</span><span class="s4">); </span>padding<span class="s4">: </span><span class="s2">10px</span><span class="s4">; </span>border-radius<span class="s4">: </span><span class="s2">8px</span><span class="s4">; </span>box-shadow<span class="s4">: </span><span class="s2">0</span><span class="s4"> </span><span class="s2">2px</span><span class="s4"> </span><span class="s2">8px</span><span class="s4"> </span><span class="s6">rgba</span><span class="s4">(</span><span class="s2">0</span><span class="s4">,</span><span class="s2">0</span><span class="s4">,</span><span class="s2">0</span><span class="s4">,</span><span class="s2">0.12</span><span class="s4">); </span>font-size<span class="s4">: </span><span class="s2">13px</span><span class="s4">; }</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span>label { <span class="s3">display</span>:block; <span class="s3">margin-top</span>:<span class="s2">6px</span>; }</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s2">.small</span> { <span class="s3">font-size</span>:<span class="s2">12px</span>; <span class="s3">color</span>:<span class="s2">#444</span>; }</p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p2">&lt;/head&gt;</p>
+<p class="p2">&lt;body&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;div <span class="s2">id</span>=<span class="s3">"ui"</span>&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span>&lt;div&gt;&lt;strong&gt;Backspin Magnus Effect&lt;/strong&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span>&lt;label&gt;Pitch speed V (m/s): &lt;span <span class="s2">id</span>=<span class="s3">"vVal"</span>&gt;40&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span>&lt;input </span><span class="s2">id</span><span class="s4">=</span>"vSlider"<span class="s4"> </span><span class="s2">type</span><span class="s4">=</span>"range"<span class="s4"> </span><span class="s2">min</span><span class="s4">=</span>"10"<span class="s4"> </span><span class="s2">max</span><span class="s4">=</span>"50"<span class="s4"> </span><span class="s2">value</span><span class="s4">=</span>"40"<span class="s4"> </span><span class="s2">step</span><span class="s4">=</span>"1"<span class="s4">&gt;</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span>&lt;label&gt;Spin (rpm): &lt;span <span class="s2">id</span>=<span class="s3">"rpmVal"</span>&gt;1800&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span>&lt;input </span><span class="s2">id</span><span class="s4">=</span>"rpmSlider"<span class="s4"> </span><span class="s2">type</span><span class="s4">=</span>"range"<span class="s4"> </span><span class="s2">min</span><span class="s4">=</span>"0"<span class="s4"> </span><span class="s2">max</span><span class="s4">=</span>"3500"<span class="s4"> </span><span class="s2">value</span><span class="s4">=</span>"1800"<span class="s4"> </span><span class="s2">step</span><span class="s4">=</span>"50"<span class="s4">&gt;</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span>&lt;label&gt;Seam angle (deg): &lt;span <span class="s2">id</span>=<span class="s3">"angleVal"</span>&gt;0&lt;/span&gt;&lt;/label&gt;</p>
+<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span>&lt;input </span><span class="s2">id</span><span class="s4">=</span>"angleSlider"<span class="s4"> </span><span class="s2">type</span><span class="s4">=</span>"range"<span class="s4"> </span><span class="s2">min</span><span class="s4">=</span>"-90"<span class="s4"> </span><span class="s2">max</span><span class="s4">=</span>"90"<span class="s4"> </span><span class="s2">value</span><span class="s4">=</span>"0"<span class="s4"> </span><span class="s2">step</span><span class="s4">=</span>"1"<span class="s4">&gt;</span></p>
+<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span>&lt;div </span><span class="s2">class</span><span class="s4">=</span>"small"<span class="s4"> </span><span class="s2">style</span><span class="s4">=</span>"margin-top:6px;"<span class="s4">&gt;</span></p>
+<p class="p2"><span class="Apple-converted-space">      </span>&lt;div&gt;Computed ω (rad/s): &lt;span <span class="s2">id</span>=<span class="s3">"omegaVal"</span>&gt;188.5&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span>&lt;div&gt;Spin parameter S: &lt;span <span class="s2">id</span>=<span class="s3">"sVal"</span>&gt;0.0175&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span>&lt;div&gt;Lift coefficient C&lt;sub&gt;L&lt;/sub&gt;: &lt;span <span class="s2">id</span>=<span class="s3">"clVal"</span>&gt;0.026&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span>&lt;div&gt;Lift force F&lt;sub&gt;L&lt;/sub&gt; (N): &lt;span <span class="s2">id</span>=<span class="s3">"flVal"</span>&gt;0.30&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p4"><br></p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span>// --- Physical constants and initial params</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s4"> r = </span><span class="s2">0.037</span><span class="s4">; </span>// baseball radius (m)</p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">const</span> mass = <span class="s2">0.145</span>; <span class="s7">// kg</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s4"> rho = </span><span class="s2">1.225</span><span class="s4">; </span>// air density kg/m^3</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s4"> A = </span><span class="s5">Math</span><span class="s4">.PI * r * r; </span>// cross-sectional area</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s4"> k_demo = </span><span class="s2">1.5</span><span class="s4">; </span>// empirical proportionality for C_L ≈ k * S (tuneable)</p>
+<p class="p5"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s4"> </span>CL_MAX<span class="s4"> = </span>0.5<span class="s4">;</span></p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span>// Visualization state</p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">let</span> canvasW = <span class="s2">1000</span>, canvasH = <span class="s2">520</span>;</p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">let</span> particles = [];</p>
+<p class="p5"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s4"> </span>N_PARTICLES<span class="s4"> = </span>220<span class="s4">;</span></p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">let</span> v = <span class="s2">40</span>, rpm = <span class="s2">1800</span>, seamAngleDeg = <span class="s2">0</span>;</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span>// UI elements</p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">let</span> vSlider, rpmSlider, angleSlider;</p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">let</span> vVal, rpmVal, angleVal, omegaVal, sVal, clVal, flVal;</p>
+<p class="p4"><br></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">  </span></span>function<span class="s4"> </span><span class="s5">setup</span><span class="s4">() {</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">createCanvas</span>(canvasW, canvasH);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// UI bindings</p>
+<p class="p2"><span class="Apple-converted-space">    </span>vSlider = <span class="s5">select</span>(<span class="s3">'#vSlider'</span>); rpmSlider = <span class="s5">select</span>(<span class="s3">'#rpmSlider'</span>); angleSlider = <span class="s5">select</span>(<span class="s3">'#angleSlider'</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span>vVal = <span class="s5">select</span>(<span class="s3">'#vVal'</span>); rpmVal = <span class="s5">select</span>(<span class="s3">'#rpmVal'</span>); angleVal = <span class="s5">select</span>(<span class="s3">'#angleVal'</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span>omegaVal = <span class="s5">select</span>(<span class="s3">'#omegaVal'</span>); sVal = <span class="s5">select</span>(<span class="s3">'#sVal'</span>); clVal = <span class="s5">select</span>(<span class="s3">'#clVal'</span>); flVal = <span class="s5">select</span>(<span class="s3">'#flVal'</span>);</p>
+<p class="p4"><br></p>
+<p class="p2"><span class="Apple-converted-space">    </span>vSlider.<span class="s5">input</span>(updateFromUI); rpmSlider.<span class="s5">input</span>(updateFromUI); angleSlider.<span class="s5">input</span>(updateFromUI);</p>
+<p class="p4"><br></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">for</span> (<span class="s1">let</span> i = <span class="s2">0</span>; i &lt; <span class="s2">N_PARTICLES</span>; i++) particles.<span class="s5">push</span>(<span class="s5">randomParticle</span>(<span class="s1">true</span>));</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>frameRate<span class="s4">(</span><span class="s2">60</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">  </span>}</p>
+<p class="p4"><br></p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">function</span><span class="s4"> </span>updateFromUI<span class="s4">() {</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span>v = <span class="s5">Number</span>(vSlider.<span class="s5">value</span>());</p>
+<p class="p2"><span class="Apple-converted-space">    </span>rpm = <span class="s5">Number</span>(rpmSlider.<span class="s5">value</span>());</p>
+<p class="p2"><span class="Apple-converted-space">    </span>seamAngleDeg = <span class="s5">Number</span>(angleSlider.<span class="s5">value</span>());</p>
+<p class="p2"><span class="Apple-converted-space">    </span>vVal.<span class="s5">html</span>(v); rpmVal.<span class="s5">html</span>(rpm); angleVal.<span class="s5">html</span>(seamAngleDeg);</p>
+<p class="p2"><span class="Apple-converted-space">  </span>}</p>
+<p class="p4"><br></p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">function</span><span class="s4"> </span>randomParticle<span class="s4">(init=</span><span class="s1">false</span><span class="s4">) {</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// spawn particles from left side with slight vertical spread</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> y = <span class="s5">random</span>(<span class="s2">40</span>, height-<span class="s2">40</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> x = <span class="s5">random</span>(-width*<span class="s2">0.25</span>, -<span class="s2">10</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> speed = <span class="s5">random</span>(v*<span class="s2">0.3</span>, v*<span class="s2">1.2</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">if</span> (init) x = <span class="s5">random</span>(-width*<span class="s2">0.5</span>, width);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">return</span> {x, y, speed, <span class="s2">life</span>: <span class="s5">random</span>(<span class="s2">80</span>, <span class="s2">300</span>), <span class="s2">age</span>: <span class="s2">0</span>};</p>
+<p class="p2"><span class="Apple-converted-space">  </span>}</p>
+<p class="p4"><br></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">  </span></span>function<span class="s4"> </span><span class="s5">draw</span><span class="s4">() {</span></p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>background<span class="s4">(</span><span class="s2">240</span><span class="s4">);</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// compute physics</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> omega = (<span class="s2">2</span> * <span class="s5">Math</span>.PI * rpm) / <span class="s2">60</span>; <span class="s7">// rad/s</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> S = (r * omega) / <span class="s5">Math</span>.<span class="s5">max</span>(<span class="s2">0.0001</span>, v);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> <span class="s2">CL</span> = <span class="s5">clamp</span>(k_demo * S, <span class="s2">0</span>, <span class="s2">CL_MAX</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> <span class="s2">FL</span> = <span class="s2">0.5</span> * rho * v * v * A * <span class="s2">CL</span>; <span class="s7">// lift N</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// UI readouts</p>
+<p class="p2"><span class="Apple-converted-space">    </span>omegaVal.<span class="s5">html</span>(omega.<span class="s5">toFixed</span>(<span class="s2">1</span>)); sVal.<span class="s5">html</span>(S.<span class="s5">toFixed</span>(<span class="s2">4</span>)); clVal.<span class="s5">html</span>(<span class="s2">CL</span>.<span class="s5">toFixed</span>(<span class="s2">3</span>)); flVal.<span class="s5">html</span>(<span class="s2">FL</span>.<span class="s5">toFixed</span>(<span class="s2">2</span>));</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw ground reference</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">();</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">250</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">rect</span>(<span class="s2">0</span>, height - <span class="s2">60</span>, width, <span class="s2">60</span>);</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// ball position moves left-&gt;right across centerline</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> t = (<span class="s5">millis</span>() / <span class="s2">1000</span>) % <span class="s2">1000</span>;</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> xBall = <span class="s5">map</span>((<span class="s5">millis</span>() / <span class="s2">1000</span>) % <span class="s2">8</span>, <span class="s2">0</span>, <span class="s2">8</span>, <span class="s2">80</span>, width - <span class="s2">220</span>); <span class="s7">// loop every 8s</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> yBall = height/<span class="s2">2</span> - <span class="s2">40</span>; <span class="s7">// baseline</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">push</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">translate</span>(xBall, yBall);</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// pressure overlay approximation (top low pressure blue, bottom higher red)</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">push</span>();</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">();</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// top pressure intensity scales with relative top speed (V + rω)</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> vtop = v + r * omega;</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> vbot = <span class="s5">Math</span>.<span class="s5">max</span>(<span class="s2">0.0001</span>, v - r * omega);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> topRel = vtop / (v + r*omega + v); <span class="s7">// normalized</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> botRel = vbot / (v + r*omega + v);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// a simple radial gradient via many concentric ellipses</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">for</span> (<span class="s1">let</span> i = <span class="s2">18</span>; i &gt; <span class="s2">0</span>; i--) {</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> f = i / <span class="s2">18</span>;</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> rPx = <span class="s5">map</span>(i, <span class="s2">0</span>, <span class="s2">18</span>, <span class="s2">0</span>, <span class="s2">86</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> tcol = <span class="s5">lerpColor</span>(<span class="s5">color</span>(<span class="s2">30</span>,<span class="s2">120</span>,<span class="s2">220</span>,<span class="s2">180</span>), <span class="s5">color</span>(<span class="s2">255</span>,<span class="s2">100</span>,<span class="s2">100</span>,<span class="s2">110</span>), <span class="s2">0.0</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> alphaTop = <span class="s5">map</span>(vtop, v*<span class="s2">0.9</span>, v*<span class="s2">2.5</span>, <span class="s2">60</span>, <span class="s2">10</span>, <span class="s1">true</span>) * (<span class="s2">1</span>-f) ;</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> alphaBot = <span class="s5">map</span>(vbot, v*<span class="s2">0.2</span>, v*<span class="s2">1.2</span>, <span class="s2">10</span>, <span class="s2">80</span>, <span class="s1">true</span>) * (<span class="s2">1</span>-f) ;</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">      </span></span>// top half blue overlay</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s5">fill</span>(<span class="s2">30</span>,<span class="s2">120</span>,<span class="s2">220</span>, alphaTop);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s5">ellipse</span>(<span class="s2">0</span>, -rPx*<span class="s2">0.18</span>, rPx*<span class="s2">1.2</span> * f + <span class="s2">10</span>, rPx*<span class="s2">0.55</span> + <span class="s2">10</span>);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">      </span></span>// bottom half reddish overlay</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s5">fill</span>(<span class="s2">255</span>,<span class="s2">90</span>,<span class="s2">70</span>, alphaBot);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s5">ellipse</span>(<span class="s2">0</span>, rPx*<span class="s2">0.18</span>, rPx*<span class="s2">1.2</span> * f + <span class="s2">10</span>, rPx*<span class="s2">0.55</span> + <span class="s2">10</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">pop</span>();</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw streamlines as particles advected past ball with local speed modification</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">updateParticles</span>(xBall, yBall, omega);</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw baseball (circle + seam)</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">();</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">255</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">ellipse</span>(<span class="s2">0</span>, <span class="s2">0</span>, <span class="s2">74</span>, <span class="s2">74</span>);</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// seam drawing (rotating)</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">push</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">rotate</span>(<span class="s5">radians</span>(seamAngleDeg));</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> seamRot = (omega * (<span class="s5">millis</span>()/<span class="s2">1000</span>) * <span class="s2">0.8</span>) % (<span class="s5">Math</span>.PI*<span class="s2">2</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">rotate</span>(seamRot);</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>stroke<span class="s4">(</span><span class="s2">160</span><span class="s4">,</span><span class="s2">20</span><span class="s4">,</span><span class="s2">20</span><span class="s4">); </span>strokeWeight<span class="s4">(</span><span class="s2">2.5</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">noFill</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">for</span> (<span class="s1">let</span> s = -<span class="s2">1</span>; s &lt;= <span class="s2">1</span>; s+=<span class="s2">2</span>) {</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">      </span></span>beginShape<span class="s4">();</span></p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">for</span> (<span class="s1">let</span> a = -<span class="s2">PI</span>/<span class="s2">2</span>; a &lt;= <span class="s2">PI</span>/<span class="s2">2</span>; a += <span class="s2">0.08</span>) {</p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s1">let</span> sx = (<span class="s2">34</span>) * <span class="s5">cos</span>(a) * <span class="s2">0.9</span> * s;</p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s1">let</span> sy = (<span class="s2">20</span>) * <span class="s5">sin</span>(a);</p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s5">vertex</span>(sx, sy);</p>
+<p class="p2"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s5">endShape</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">pop</span>();</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw spin indicator</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noFill<span class="s4">(); </span>stroke<span class="s4">(</span><span class="s2">60</span><span class="s4">); </span>strokeWeight<span class="s4">(</span><span class="s2">1.6</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">ellipse</span>(-<span class="s2">42</span>, -<span class="s2">38</span>, <span class="s2">22</span>, <span class="s2">22</span>);</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">(); </span>fill<span class="s4">(</span><span class="s2">60</span><span class="s4">);</span></p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>textSize<span class="s4">(</span><span class="s2">12</span><span class="s4">); </span>textAlign<span class="s4">(</span><span class="s2">LEFT</span><span class="s4">, </span><span class="s2">CENTER</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">text</span>(<span class="s3">`ω`</span>, -<span class="s2">54</span>, -<span class="s2">38</span>);</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw velocity and force vectors</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>drawVectors<span class="s4">(</span><span class="s2">CL</span><span class="s4">, </span><span class="s2">FL</span><span class="s4">);</span></p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s5">pop</span><span class="s4">(); </span>// end ball transform</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw inset graph for C_L vs S (simple)</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>drawInsetGraph<span class="s4">(k_demo);</span></p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw legend text</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">();</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">30</span>);</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>textSize<span class="s4">(</span><span class="s2">13</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">textAlign</span>(<span class="s2">LEFT</span>, <span class="s2">TOP</span>);</p>
+<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s5">text</span><span class="s4">(</span>"Drag sliders to change V, spin (rpm), and seam angle. Backspin increases top relative speed → lower pressure → upward Magnus lift."<span class="s4">, </span><span class="s2">12</span><span class="s4">, height - </span><span class="s2">54</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">  </span>}</p>
+<p class="p4"><br></p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">function</span> <span class="s5">updateParticles</span>(xBall, yBall, omega) {</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">for</span> (<span class="s1">let</span> p <span class="s1">of</span> particles) {</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">      </span></span>// local effect: if particle near ball, alter speed and curve upward based on spin</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">      </span></span>// convert to screen pixels: ball radius ~37 px</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> dx = p.x - xBall;</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> dy = p.y - yBall;</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> dist = <span class="s5">Math</span>.<span class="s5">sqrt</span>(dx*dx + dy*dy);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">      </span></span>// background advection to the right</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> baseVpx = <span class="s5">map</span>(v, <span class="s2">0</span>, <span class="s2">50</span>, <span class="s2">0.6</span>, <span class="s2">3.6</span>); <span class="s7">// px per frame base</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">      </span></span>// modify speed when near top or bottom of ball to hint faster top flow</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">if</span> (dist &lt; <span class="s2">110</span>) {</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span>// determine whether particle is above or below ball center</p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s1">let</span> sign = (p.y &lt; yBall) ? -<span class="s2">1</span> : <span class="s2">1</span>;</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span>// surface tangential speed in m/s at that side</p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s1">let</span> tangential = r * omega * (sign * -<span class="s2">1</span>); <span class="s7">// sign chosen so backspin gives top faster</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span>// relative local speed = V + sign * rω (screen effect)</p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s1">let</span> rel = v + ( (p.y &lt; yBall) ? r*omega : -r*omega );</p>
+<p class="p2"><span class="Apple-converted-space">        </span>rel = <span class="s5">constrain</span>(rel, <span class="s2">0.2</span>, v*<span class="s2">2.5</span>);</p>
+<p class="p2"><span class="Apple-converted-space">        </span><span class="s1">let</span> flowFactor = <span class="s5">map</span>(rel, <span class="s2">0</span>, v*<span class="s2">2.5</span>, <span class="s2">0.2</span>, <span class="s2">3.0</span>);</p>
+<p class="p2"><span class="Apple-converted-space">        </span>p.x += baseVpx * flowFactor;</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span>// slight vertical drift to show curvature</p>
+<p class="p2"><span class="Apple-converted-space">        </span>p.y += <span class="s5">map</span>(sign * (rel - v), -v*<span class="s2">1.2</span>, v*<span class="s2">1.2</span>, -<span class="s2">1.8</span>, <span class="s2">1.8</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span>} <span class="s1">else</span> {</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span>// far away: gentle right movement with small vertical jitter</p>
+<p class="p2"><span class="Apple-converted-space">        </span>p.x += baseVpx * <span class="s5">random</span>(<span class="s2">0.8</span>,<span class="s2">1.2</span>);</p>
+<p class="p2"><span class="Apple-converted-space">        </span>p.y += <span class="s5">random</span>(-<span class="s2">0.4</span>,<span class="s2">0.4</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><span class="Apple-converted-space">      </span>p.age++;</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">if</span> (p.x &gt; width + <span class="s2">50</span> || p.age &gt; p.life) {</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span>// respawn at left</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">        </span></span>Object<span class="s4">.</span>assign<span class="s4">(p, </span>randomParticle<span class="s4">(</span><span class="s1">false</span><span class="s4">));</span></p>
+<p class="p2"><span class="Apple-converted-space">        </span>p.x = <span class="s5">random</span>(-width*<span class="s2">0.2</span>, -<span class="s2">10</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">      </span></span>// draw particle as small translucent line</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">      </span></span>stroke<span class="s4">(</span><span class="s2">40</span><span class="s4">, </span><span class="s2">120</span><span class="s4">); </span>strokeWeight<span class="s4">(</span><span class="s2">1</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s5">line</span>(p.x, p.y, p.x - <span class="s2">4</span>, p.y);</p>
+<p class="p2"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><span class="Apple-converted-space">  </span>}</p>
+<p class="p4"><br></p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">function</span> <span class="s5">drawVectors</span>(CL, FL) {</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// draw V vector at ball</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">push</span>();</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>strokeWeight<span class="s4">(</span><span class="s2">3</span><span class="s4">);</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// Velocity vector (right)</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">stroke</span>(<span class="s2">30</span>, <span class="s2">120</span>, <span class="s2">200</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">line</span>(-<span class="s2">6</span>, <span class="s2">44</span>, <span class="s2">56</span>, <span class="s2">44</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">30</span>,<span class="s2">120</span>,<span class="s2">200</span>); <span class="s5">noStroke</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">triangle</span>(<span class="s2">56</span>,<span class="s2">44</span>,<span class="s2">48</span>,<span class="s2">40</span>,<span class="s2">48</span>,<span class="s2">48</span>);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// Lift vector (up) scaled for display</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> liftDisplay = <span class="s5">map</span>(<span class="s2">FL</span>, <span class="s2">0</span>, <span class="s2">20</span>, <span class="s2">0</span>, <span class="s2">70</span>); <span class="s7">// scale mapping</span></p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>stroke<span class="s4">(</span><span class="s2">40</span><span class="s4">,</span><span class="s2">180</span><span class="s4">,</span><span class="s2">80</span><span class="s4">); </span>strokeWeight<span class="s4">(</span><span class="s2">3</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">line</span>(<span class="s2">10</span>, <span class="s2">20</span>, <span class="s2">10</span>, <span class="s2">20</span> - liftDisplay);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">40</span>,<span class="s2">180</span>,<span class="s2">80</span>);</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">();</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">triangle</span>(<span class="s2">10</span>, <span class="s2">20</span> - liftDisplay - <span class="s2">8</span>, <span class="s2">6</span>, <span class="s2">20</span> - liftDisplay + <span class="s2">6</span>, <span class="s2">14</span>, <span class="s2">20</span> - liftDisplay + <span class="s2">6</span>);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// Drag vector (left small)</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>stroke<span class="s4">(</span><span class="s2">180</span><span class="s4">,</span><span class="s2">60</span><span class="s4">,</span><span class="s2">60</span><span class="s4">); </span>strokeWeight<span class="s4">(</span><span class="s2">3</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">line</span>(-<span class="s2">8</span>, <span class="s2">44</span>, -<span class="s2">40</span>, <span class="s2">44</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">180</span>,<span class="s2">60</span>,<span class="s2">60</span>); <span class="s5">noStroke</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">triangle</span>(-<span class="s2">40</span>,<span class="s2">44</span>,-<span class="s2">32</span>,<span class="s2">48</span>,-<span class="s2">32</span>,<span class="s2">40</span>);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// labels</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">(); </span>fill<span class="s4">(</span><span class="s2">30</span><span class="s4">);</span></p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>textSize<span class="s4">(</span><span class="s2">12</span><span class="s4">); </span>textAlign<span class="s4">(</span><span class="s2">LEFT</span><span class="s4">, </span><span class="s2">CENTER</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">text</span>(<span class="s3">'V'</span>, <span class="s2">60</span>, <span class="s2">44</span>); <span class="s5">text</span>(<span class="s3">'F_L'</span>, <span class="s2">16</span>, <span class="s2">20</span> - liftDisplay - <span class="s2">14</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">pop</span>();</p>
+<p class="p2"><span class="Apple-converted-space">  </span>}</p>
+<p class="p4"><br></p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">  </span></span><span class="s1">function</span><span class="s4"> </span>drawInsetGraph<span class="s4">(k_demo) {</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> w = <span class="s2">220</span>, h = <span class="s2">110</span>;</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> x = width - w - <span class="s2">12</span>, y = <span class="s2">12</span>;</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">push</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">255</span>, <span class="s2">245</span>); <span class="s5">stroke</span>(<span class="s2">0</span>,<span class="s2">15</span>); <span class="s5">rect</span>(x, y, w, h, <span class="s2">8</span>);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// axes</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">push</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">translate</span>(x+<span class="s2">36</span>, y+h-<span class="s2">18</span>);</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>stroke<span class="s4">(</span><span class="s2">80</span><span class="s4">); </span>strokeWeight<span class="s4">(</span><span class="s2">1</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">line</span>(<span class="s2">0</span>,<span class="s2">0</span>, <span class="s2">0</span>, -<span class="s2">72</span>); <span class="s5">line</span>(<span class="s2">0</span>,<span class="s2">0</span>, <span class="s2">150</span>, <span class="s2">0</span>);</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">(); </span>fill<span class="s4">(</span><span class="s2">40</span><span class="s4">); </span>textSize<span class="s4">(</span><span class="s2">12</span><span class="s4">); </span>textAlign<span class="s4">(</span><span class="s2">LEFT</span><span class="s4">, </span><span class="s2">BOTTOM</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">text</span>(<span class="s3">'C_L vs S'</span>, -<span class="s2">34</span>, -<span class="s2">78</span>);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// plot theoretical C_L = k*S (clamped)</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> <span class="s5">Smax</span> = <span class="s2">0.12</span>;</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">stroke</span>(<span class="s2">30</span>,<span class="s2">120</span>,<span class="s2">200</span>); <span class="s5">noFill</span>();</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>beginShape<span class="s4">();</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">for</span> (<span class="s1">let</span> i=<span class="s2">0</span>;i&lt;=<span class="s2">150</span>;i++) {</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> sx = <span class="s5">map</span>(i,<span class="s2">0</span>,<span class="s2">150</span>,<span class="s2">0</span>,<span class="s5">Smax</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> <span class="s2">CL</span> = <span class="s5">clamp</span>(k_demo * sx, <span class="s2">0</span>, <span class="s2">CL_MAX</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> px = <span class="s5">map</span>(sx, <span class="s2">0</span>, <span class="s5">Smax</span>, <span class="s2">0</span>, <span class="s2">150</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s1">let</span> py = <span class="s5">map</span>(<span class="s2">CL</span>, <span class="s2">0</span>, <span class="s2">CL_MAX</span>, <span class="s2">0</span>, -<span class="s2">72</span>);</p>
+<p class="p2"><span class="Apple-converted-space">      </span><span class="s5">vertex</span>(px, py);</p>
+<p class="p2"><span class="Apple-converted-space">    </span>}</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>endShape<span class="s4">();</span></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// current point</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> omega = (<span class="s2">2</span> * <span class="s5">Math</span>.PI * rpm) / <span class="s2">60</span>;</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> <span class="s5">Scur</span> = (r * omega) / <span class="s5">Math</span>.<span class="s5">max</span>(<span class="s2">0.0001</span>, v);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">const</span> <span class="s5">Ccur</span> = <span class="s5">clamp</span>(k_demo * <span class="s5">Scur</span>, <span class="s2">0</span>, <span class="s2">CL_MAX</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">fill</span>(<span class="s2">200</span>,<span class="s2">30</span>,<span class="s2">30</span>); <span class="s5">noStroke</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> cx = <span class="s5">map</span>(<span class="s5">Scur</span>, <span class="s2">0</span>, <span class="s5">Smax</span>, <span class="s2">0</span>, <span class="s2">150</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s1">let</span> cy = <span class="s5">map</span>(<span class="s5">Ccur</span>, <span class="s2">0</span>, <span class="s2">CL_MAX</span>, <span class="s2">0</span>, -<span class="s2">72</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">ellipse</span>(cx, cy, <span class="s2">6</span>,<span class="s2">6</span>);</p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span>// axis labels</p>
+<p class="p7"><span class="s4"><span class="Apple-converted-space">    </span></span>noStroke<span class="s4">(); </span>fill<span class="s4">(</span><span class="s2">70</span><span class="s4">); </span>textSize<span class="s4">(</span><span class="s2">10</span><span class="s4">); </span>textAlign<span class="s4">(</span><span class="s2">CENTER</span><span class="s4">);</span></p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">text</span>(<span class="s3">'S'</span>, <span class="s2">75</span>, <span class="s2">12</span>); <span class="s5">textAlign</span>(<span class="s2">RIGHT</span>); <span class="s5">text</span>(<span class="s3">'C_L'</span>, -<span class="s2">8</span>, -<span class="s2">36</span>);</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">pop</span>();</p>
+<p class="p2"><span class="Apple-converted-space">    </span><span class="s5">pop</span>();</p>
+<p class="p2"><span class="Apple-converted-space">  </span>}</p>
+<p class="p4"><br></p>
+<p class="p1"><span class="s4"><span class="Apple-converted-space">  </span></span>// utility</p>
+<p class="p2"><span class="Apple-converted-space">  </span><span class="s1">function</span> <span class="s5">clamp</span>(x, a, b) { <span class="s1">return</span> <span class="s5">Math</span>.<span class="s5">max</span>(a, <span class="s5">Math</span>.<span class="s5">min</span>(b, x)); }</p>
+<p class="p2"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p2">&lt;/body&gt;</p>
+<p class="p2">&lt;/html&gt;</p>
+</body>
+</html>
